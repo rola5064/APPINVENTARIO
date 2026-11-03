@@ -1,0 +1,105 @@
+.dash-titulo {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.kpi-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.kpi-label {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.kpi-value {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.kpi-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.panel-title {
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.donut {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.donut::after {
+  content: "";
+  position: absolute;
+  inset: 35px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.leyenda {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+.leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.leyenda strong {
+  margin-left: auto;
+}
+
+.punto {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
