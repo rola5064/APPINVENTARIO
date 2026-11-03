@@ -1,96 +1,113 @@
-import { useState } from "react";
-import api from "../../services/api";
-import logo from "../../assets/logo.png";
-import "./Login.css";
+import { useState } from 'react';
+import './login.css';
+// Cambia esta ruta por la del logo que ya usas en tu login actual
+import logo from '../../assets/logo.png';
 
-const Login = ({ onLogin }) => {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [mostrar, setMostrar] = useState(false);
+  const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
-  const [verPassword, setVerPassword] = useState(false);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
+  // Si ya tienes tu propia función de login, pega aquí su contenido
+  // y borra esta. Lo nuevo de este archivo es el diseño (el return).
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setCargando(true);
     try {
-      const response = await api.post("/login", form);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
-      onLogin(response.data.usuario);
+      const res = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'No se pudo iniciar sesión');
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('usuario', JSON.stringify(data.usuario));
+      window.location.href = '/'; // ajusta a tu ruta de inicio
     } catch (err) {
-      setError(err.response?.data?.error || "No se pudo iniciar sesión");
+      setError(err.message);
     } finally {
       setCargando(false);
     }
   };
 
   return (
-    <div className="login-page">
-      <div className="login-card">
-        <img src={logo} alt="SENATI" className="login-logo-img" width="140" />
-        <h2>Sistema de Inventario</h2>
-        <p className="login-subtitle">Ingresa con tu cuenta para continuar</p>
+    <main className="lg-page">
+      <section className="lg-brand">
+        <svg className="lg-arcs" viewBox="0 0 600 800" preserveAspectRatio="xMaxYMax slice" aria-hidden="true">
+          <g fill="none" stroke="#fff" strokeWidth="1">
+            <circle cx="620" cy="820" r="180" />
+            <circle cx="620" cy="820" r="280" />
+            <circle cx="620" cy="820" r="380" />
+            <circle cx="620" cy="820" r="480" />
+            <circle cx="620" cy="820" r="580" />
+            <circle cx="620" cy="820" r="680" />
+          </g>
+        </svg>
 
-        <form onSubmit={handleSubmit}>
-          {error && <div className="alert alert-danger py-2">{error}</div>}
+        <div className="lg-brand-body">
+          <h1>Hola, bienvenido al Sistema de Inventario SENATI</h1>
+          <p>
+            Controla tu stock, registra cada entrada y salida y mantén la
+            información de la institución segura en un solo lugar.
+          </p>
+        </div>
 
-          <div className="form-floating mb-3">
+        <small className="lg-copy">© {new Date().getFullYear()} SENATI. Todos los derechos reservados.</small>
+      </section>
+
+      <section className="lg-side">
+        <form className="lg-form" onSubmit={handleSubmit}>
+          <img src={logo} alt="SENATI" className="lg-logo" />
+
+          <h2>Bienvenido de nuevo</h2>
+          <p className="lg-sub">Ingresa con tu cuenta para continuar</p>
+
+          {error && (
+            <div className="lg-error" role="alert">
+              {error}
+            </div>
+          )}
+
+          <label className="lg-field">
+            <span>Email</span>
             <input
               type="email"
-              id="email"
-              name="email"
-              className="form-control"
-              placeholder="Email"
-              value={form.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
               required
             />
-            <label htmlFor="email">Email</label>
-          </div>
+          </label>
 
-          <div className="form-floating mb-2">
+          <label className="lg-field">
+            <span>Contraseña</span>
             <input
-              type={verPassword ? "text" : "password"}
-              id="password"
-              name="password"
-              className="form-control"
-              placeholder="Contraseña"
-              value={form.password}
-              onChange={handleChange}
+              type={mostrar ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
               required
             />
-            <label htmlFor="password">Contraseña</label>
-          </div>
+          </label>
 
-          <div className="form-check mb-4">
+          <label className="lg-check">
             <input
               type="checkbox"
-              id="verPassword"
-              className="form-check-input"
-              checked={verPassword}
-              onChange={(e) => setVerPassword(e.target.checked)}
+              checked={mostrar}
+              onChange={(e) => setMostrar(e.target.checked)}
             />
-            <label htmlFor="verPassword" className="form-check-label">
-              Mostrar contraseña
-            </label>
-          </div>
+            Mostrar contraseña
+          </label>
 
-          <button
-            type="submit"
-            className="btn btn-primary login-btn w-100"
-            disabled={cargando}
-          >
-            {cargando ? "Ingresando..." : "Ingresar"}
+          <button type="submit" className="lg-btn" disabled={cargando}>
+            {cargando ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
   );
-};
-
-export default Login;
+}

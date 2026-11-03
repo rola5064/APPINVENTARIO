@@ -1,52 +1,204 @@
-.login-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  padding: 20px;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 400px;
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 40px 32px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+/* Todo el login usa el prefijo "lg-" para no chocar con Bootstrap ni index.css */
+.lg-page {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow-y: auto;
+  background: #fff;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: #111827;
   text-align: left;
 }
 
-.login-card .login-logo-img {
+.lg-page *,
+.lg-page *::before,
+.lg-page *::after {
+  box-sizing: border-box;
+}
+
+/* ---------- Izquierda: azul ---------- */
+.lg-brand {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 56px clamp(32px, 6vw, 88px) 40px;
+  overflow: hidden;
+  background: linear-gradient(165deg, #2f45d8 0%, #1d2fa8 55%, #0f1a6b 100%);
+  color: #fff;
+}
+
+.lg-arcs {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+.lg-brand-body {
+  position: relative;
+  margin: auto 0;
+  padding-top: 40px;
+}
+
+.lg-brand-body h1 {
+  margin: 0 0 20px;
+  max-width: 13ch;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.lg-brand-body p {
+  margin: 0;
+  max-width: 42ch;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #d3dcff;
+}
+
+.lg-copy {
+  position: relative;
+  color: #a9b8f5;
+}
+
+/* ---------- Derecha: formulario ---------- */
+.lg-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: #fff;
+}
+
+.lg-form {
+  width: 100%;
+  max-width: 380px;
+}
+
+.lg-logo {
   display: block;
-  width: 140px;
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto 16px;
+  width: 110px;
+  margin: 0 0 44px;
 }
 
-.login-card h2 {
-  text-align: center;
+.lg-form h2 {
+  margin: 0 0 6px;
+  font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 4px;
 }
 
-.login-subtitle {
-  text-align: center;
-  color: #6c757d;
-  font-size: 14px;
-  margin-bottom: 24px;
+.lg-sub {
+  margin: 0 0 28px;
+  font-size: 0.92rem;
+  color: #6b7280;
 }
 
-.login-btn {
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  border: none;
-  padding: 12px;
-  font-weight: 600;
+.lg-error {
+  margin-bottom: 18px;
+  padding: 10px 14px;
   border-radius: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 0.9rem;
 }
 
-.login-btn:hover {
-  opacity: 0.9;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+.lg-field {
+  display: block;
+  margin-bottom: 20px;
 }
+
+.lg-field span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.lg-field input {
+  display: block;
+  width: 100%;
+  padding: 6px 2px;
+  border: 0;
+  border-bottom: 1.5px solid #d1d5db;
+  border-radius: 0;
+  background: transparent;
+  font-size: 1rem;
+  color: #111827;
+  transition: border-color 0.15s;
+}
+
+.lg-field input:focus {
+  outline: none;
+  border-bottom-color: #1d2fa8;
+}
+
+.lg-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 26px;
+  font-size: 0.9rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.lg-btn {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  border: 0;
+  border-radius: 8px;
+  background: #1d2fa8;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.lg-btn:hover:not(:disabled) {
+  background: #15228a;
+}
+
+.lg-btn:focus-visible {
+  outline: 3px solid #a5b4fc;
+  outline-offset: 2px;
+}
+
+.lg-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+/* ---------- Móvil ---------- */
+@media (max-width: 860px) {
+  .lg-page {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .lg-brand {
+    padding: 32px 24px;
+  }
+
+  .lg-brand-body {
+    margin: 0;
+    padding-top: 0;
+  }
+
+  .lg-brand-body h1 {
+    font-size: 1.8rem;
+    max-width: 18ch;
+  }
+
+  .lg-copy {
+    display: none;
+  }
+}
+

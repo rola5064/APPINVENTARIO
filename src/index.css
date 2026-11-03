@@ -1,13 +1,11 @@
-body {
-  margin: 0;
-  background: #f3f5f9;
-}
+:root {
+  --primario: #1d4ed8;      /* azul SENATI */
+  --primario-oscuro: #1e2a4a; /* sidebar */
+  --fondo: #f3f4f8;
+  --texto: #1f2937;
 
-#root {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  border: none;
-  text-align: left;
+  --exito: #10b981;   /* verde: entradas, stock ok */
+  --alerta: #f59e0b;  /* ámbar: stock bajo */
+  --peligro: #ef4444; /* rojo: sin stock, salidas */
+  --info: #8b5cf6;    /* morado: proveedores */
 }
