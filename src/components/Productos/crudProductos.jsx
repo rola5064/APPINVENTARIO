@@ -69,23 +69,40 @@ const CrudProductos = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const payload = {
+        nombre: form.nombre,
+        descripcion: form.descripcion,
+        precio: Number(form.precio),
+        categoriaId: Number(form.categoriaId),
+        proveedorId: form.proveedorId ? Number(form.proveedorId) : null,
+      };
+
       if (form.id) {
-        await api.put(`/productos/${form.id}`, form);
+        await api.put(`/api/productos/${form.id}`, payload);
       } else {
-        await api.post("/productos", form);
+        await api.post("/api/productos", {
+          ...payload,
+          stock: Number(form.stock),
+        });
       }
       setForm(formVacio);
       setMostrarForm(false);
       obtenerProductos();
     } catch (error) {
-      alert(error.response?.data?.error || "Error al guardar el producto");
+      console.error("Error al guardar:", error.response || error);
+      alert(
+        error.response?.data?.error ||
+          error.response?.data?.message ||
+          error.message ||
+          "Error al guardar el producto"
+      );
     }
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Seguro que deseas eliminar este producto?")) {
       try {
-        await api.delete(`/productos/${id}`);
+        await api.delete(`/api/productos/${id}`);
         obtenerProductos();
       } catch (error) {
         alert(error.response?.data?.error || "No se pudo eliminar el producto");
